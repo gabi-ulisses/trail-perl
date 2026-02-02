@@ -1,0 +1,111 @@
+# --
+# Kernel/Output/HTML/Templates/Standard/AdminVendor.pm
+# Copyright (C) 2019 Service Up, http://www.serviceup.com.br
+#
+# written/edited by:
+# * gsantos@serviceup.com.br
+# --
+
+<!-- Overview: É o 'container' da página toda no padrão Znuny -->
+[% RenderBlockStart("Overview") %]
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <div class="ContentColumn">
+
+[% RenderBlockStart("NotifySuccess") %]
+        <div class="WidgetSimple">
+            <div class="Content">
+                <div class="MessageBox Success">
+                    <p>[% Translate("Vendor") | html %] "[% Data.VendorName | html %]" [% Translate("was saved successfully!") | html %]</p>
+                </div>
+            </div>
+        </div>
+[% RenderBlockEnd("NotifySuccess") %]
+        
+<!-- OverviewUpdate: Usado tanto para criar quanto para editar -->
+[% RenderBlockStart("OverviewUpdate") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>
+                    <!-- IF/ELSE para mudar o título baseado na Action -->
+                    [% IF Data.Action == "Add" %]
+                        [% Translate("Add New Vendor") | html %]
+                    [% ELSE %]
+                        [% Translate("Edit Vendor") | html %]: [% Data.VendorName | html %]
+                    [% END %]
+                </h2>
+            </div>
+
+            <div class="Content">
+                <!--  Action: Define o que o módulo processa. Subaction: Define a função específica -->
+                <form action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                    <!-- 'AddAction' ou 'ChangeAction'-->
+                    <input type="hidden" name="Subaction" value="[% Data.Action | html %]Action"/>
+                    <input type="hidden" name="ID" value="[% Data.VendorID | html %]"/>
+                    [% IF Data.Action == 'Change' %]
+                        <!-- Continuar na página após salvar -->
+                        <input type="hidden" name="ContinueAfterSave" id="ContinueAfterSave" value=""/>
+                    [% END %]
+
+                    <fieldset class="TableLike">
+
+                        <!-- Campo Texto: Label + div "Field" -->
+                        <div class="field-wrapper">
+                            <label class="Mandatory" for="VendorName">
+                                <span class="Marker">*</span> [% Translate("Vendor Name") | html %]
+                            </label>
+                            <div class="Field">
+                                <!-- value="[% Data.xxx %]": Traz o valor do campo preenchido pelo usuário (para edição) -->
+                                <input type="text" name="VendorName" id="VendorName" value="[% Data.VendorName | html %]" class="W50pc Validate_Required [% Data.VendorNameInvalid | html %]"/>
+                                <!-- VendorNameError tratado por JS, validado em tela -->
+                                <div id="VendorNameError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                <!-- VendorNameServerError mensagem de erro do servidor, valido no .pm -->
+                                <div id="VendorNameServerError" class="TooltipErrorMessage"><p>[% Translate(Data.VendorNameErrorServerMessage || "This field is required.") | html %]</p></div>
+                            </div>
+                        </div>
+
+                        <!-- Campo select: O HTML do <select> vem "pronto" do /Kernel/Modules/AdminVendor.pm no Data.xxxOption -->
+                        <div class="field-wrapper">
+                            <label class="Mandatory" for="ServiceType">
+                                <span class="Marker">*</span> [% Translate("Service Type") | html %]
+                            </label>
+                            <div class="Field">
+                                <!-- ServiceTypeOption é preenchida pelo /Kernel/Modules/AdminVendor.pm com o HTML do campo <select> completo -->
+                                [% Data.ServiceTypeOption %]
+                                <div id="ServiceTypeError" class="TooltipErrorMessage"><p>[% Translate("Please select a value.") | html %]</p></div>
+                                <div id="ServiceTypeServerError" class="TooltipErrorMessage"><p>[% Translate("Please select a value.") | html %]</p></div>
+                            </div>
+                        </div>
+
+                        <div class="field-wrapper form-button-actions">
+                            <div class="Field buttons-field">
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="btn-cancel-ghost btn-main btn-width-md">
+                                    [% Translate("Cancel") | html %]
+                                </a>
+
+                                [% IF Data.Action == 'Change' %]
+                                    <!-- Na edição, existe dois tipos de salvamento -->
+                                    <button class="btn-primary-ghost btn-main btn-width-md" id="Submit" type="submit">
+                                        <span>[% Translate("Save and finish") | html %]</span>
+                                    </button>
+                                    <button class="btn-primary btn-main btn-width-md" id="SubmitAndContinue" type="submit" name="ContinueAfterSave" value="1">
+                                        <span>[% Translate("Save") | html %]</span>
+                                    </button>
+                                [% ELSE %]
+                                    <!-- No cadastro novo existe o botão de salvar -->
+                                    <button class="btn-primary btn-main btn-width-md" id="Submit" type="submit">
+                                        <span>[% Translate("Save") | html %]</span>
+                                    </button>
+                                [% END %]
+                            </div>
+                        </div>
+            
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+[% RenderBlockEnd("OverviewUpdate") %]
+
+    </div>
+</div>
+[% RenderBlockEnd("Overview") %]

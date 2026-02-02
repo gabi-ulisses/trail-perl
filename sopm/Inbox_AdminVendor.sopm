@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>InBox AdminVendor</Name>
+    <Version>7.0.0</Version>
+    <Framework>7.x.x</Framework>
+    <Vendor>Service Up</Vendor>
+    <URL>http://www.serviceup.com.br/</URL>
+    <License>Produto da Service Up (contato@serviceup.com.br)</License>
+    <ChangeLog Version="7.0.0" Date="2026-02-02 11:50:00">First version Znuny 7 - Vendor Management</ChangeLog>
+    
+    <Description Lang="en">Module for managing vendors.</Description>
+    <Description Lang="es">Módulo para la gestión de proveedores.</Description>
+    <Description Lang="pt_BR">Módulo para gerenciamento de fornecedores.</Description>
+
+        <IntroInstall Lang="en" Title="Install Information" Type="pre"><![CDATA[
+        <br>
+            <strong>WELCOME</strong>
+        <br>
+        <br>
+            You are about to install the package InBox AdminVendor.
+        <br>     
+        <br>
+        <strong>REQUIRED InBox PACKAGES</strong>
+        <ul>
+           <li> InBox Core 7.0.0 or superior</li>
+        </ul>
+        <br>
+        <br>   
+            ((enjoy))
+        <br>
+        <br>
+    ]]></IntroInstall>
+    <IntroInstall Lang="es" Title="Información de instalación" Type="pre"><![CDATA[
+        <br> 
+            <strong>Bienvenido (a)</strong> 
+        <br> 
+        <br> 
+            Está a punto de instalar el paquete InBox AdminVendor.
+        <br>  
+        <br>
+        <strong>PAQUETES InBox REQUERIDOS</strong>
+        <ul>
+            <li> InBox Core 7.0.0 o superior</li>
+        </ul>
+        <br>
+        <br>         
+            ((enjoy)) 
+        <br> 
+        <br> 
+    ]]></IntroInstall>
+    <IntroInstall Lang="pt_BR" Title="Informações da Instalação" Type="pre"><![CDATA[
+        <br>
+            <strong>Bem-vindo(a)</strong>
+        <br>
+        <br>
+            Você está prestes a instalar o pacote InBox AdminVendor.
+        <br> 
+        <br>
+        <strong>PACOTE InBox REQUERIDO</strong>
+        <ul>
+            <li> InBox Core 7.0.0 ou superior</li>
+        </ul>
+        <br>
+        <br>          
+            ((Aprecie))
+        <br>
+        <br>
+    ]]></IntroInstall>
+    <IntroInstall Lang="en"    Title="Thank you!" Type="post">Thank you for choosing the Service Up</IntroInstall>
+    <IntroInstall Lang="pt_BR" Title="Obrigado!"  Type="post">Obrigado por escolher o módulo da Service Up.</IntroInstall>
+    <IntroInstall Lang="es"    Title="Gracias!"   Type="post">Gracias por elegir el módulo Service Up.</IntroInstall>
+    <BuildDate>?</BuildDate>
+    <BuildHost>?</BuildHost>
+    <Filelist>
+        <File Permission="660" Location="Kernel/Config/Files/XML/AdminVendor.xml"></File>   
+        <File Permission="660" Location="Kernel/Language/es_AdminVendor.pm"></File>     
+        <File Permission="660" Location="Kernel/Language/pt_BR_AdminVendor.pm"></File>
+        <File Permission="660" Location="Kernel/Modules/AdminVendor.pm"></File>
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminVendor.tt"></File>
+    </Filelist>
+    <DatabaseInstall>
+        <TableCreate Name="vendor">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
+            <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="service_type" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="create_time" Required="true" Type="DATE"/>
+            <Column Name="change_time" Required="true" Type="DATE"/>
+        </TableCreate>
+    </DatabaseInstall>
+    <DatabaseUninstall>
+        <TableDrop Name="vendor"/>
+    </DatabaseUninstall>
+     <CodeInstall Type="post"><![CDATA[
+
+        $Kernel::OM->Get('var::packagesetup::InBoxCore')->CodeInstall(ModuleName => "InBox AdminVendor - 7.0.0");
+
+	]]></CodeInstall>
+</otrs_package>

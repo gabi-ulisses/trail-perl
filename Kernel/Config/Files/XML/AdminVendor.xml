@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+
+    <Setting Name="Frontend::Module###AdminVendor" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>InBox::AdminVendor::Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">This is my first module and it implements "Admin Vendor!"</Item>
+                    <Item Key="Title" Translatable="1">Admin Vendor</Item>
+                    <Item Key="NavBarName">Admin</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+
+</otrs_config>
